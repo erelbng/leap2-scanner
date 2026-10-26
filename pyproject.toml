@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "leap2-scanner"
+version = "0.1.0"
+description = "Handheld 3D scanner from an Ultraleap Leap Motion Controller 2 (plain UVC, no SDK): live browser viewer, STL mesh and Gaussian-splat datasets"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "opencv-contrib-python-headless>=4.8",  # contrib: optional WLS hole filling in the stereo (--fill)
+    "scipy>=1.10",
+    "scikit-image>=0.21",
+    "trimesh>=4.0",
+    "fast-simplification>=0.1.7",  # quadric mesh decimation (trimesh.simplify_quadric_decimation)
+    "viser>=1.0",
+]
+
+[project.optional-dependencies]
+# Gaussian-splat training/rendering (splat/*.py) - needs an NVIDIA GPU with CUDA.
+splat = ["torch>=2.1", "gsplat>=1.3"]
+
+[project.scripts]
+leap2-scanner = "leap2_scanner.__main__:main"
+
+[tool.setuptools]
+packages = ["leap2_scanner"]
